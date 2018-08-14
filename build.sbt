@@ -20,7 +20,7 @@ val akkaPersistenceCassandraDependencies = Seq(
 )
 
 
-def common: Seq[Setting[_]] = SbtScalariform.scalariformSettings ++ Seq(
+def common: Seq[Setting[_]] = Seq(
   organization := "com.typesafe.akka",
   organizationName := "Lightbend Inc.",
   startYear := Some(2016),
@@ -61,6 +61,7 @@ def common: Seq[Setting[_]] = SbtScalariform.scalariformSettings ++ Seq(
   // disable parallel tests
   parallelExecution in Test := false,
 
+  scalariformAutoformat := true,
   ScalariformKeys.preferences in Compile  := formattingPreferences,
   ScalariformKeys.preferences in Test     := formattingPreferences
 )
