@@ -79,8 +79,7 @@ class CassandraJournal(cfg: Config) extends AsyncWriteJournal
     log,
     metricsCategory = s"${self.path.name}",
     init = session =>
-    executeCreateKeyspaceAndTables(session, config)
-  )
+      executeCreateKeyspaceAndTables(session, config))
 
   private val tagWriterSession = TagWritersSession(
     preparedWriteToTagViewWithoutMeta,
@@ -88,8 +87,7 @@ class CassandraJournal(cfg: Config) extends AsyncWriteJournal
     session.executeWrite,
     session.selectResultSet,
     preparedWriteToTagProgress,
-    preparedWriteTagScanning
-  )
+    preparedWriteTagScanning)
 
   protected val tagWrites: Option[ActorRef] =
     if (config.eventsByTagEnabled)
@@ -107,8 +105,7 @@ class CassandraJournal(cfg: Config) extends AsyncWriteJournal
   def preparedDeleteMessages = session.prepare(deleteMessages).map(_.setIdempotent(true))
 
   def preparedWriteMessageWithMeta = session.prepare(
-    writeMessage(withMeta = true)
-  ).map(_.setIdempotent(true))
+    writeMessage(withMeta = true)).map(_.setIdempotent(true))
   def preparedSelectMessages = session.prepare(selectMessages)
     .map(_.setConsistencyLevel(readConsistency).setIdempotent(true).setRetryPolicy(readRetryPolicy))
   def preparedWriteInUse = session.prepare(writeInUse).map(_.setIdempotent(true))
@@ -490,8 +487,7 @@ class CassandraJournal(cfg: Config) extends AsyncWriteJournal
     fromSequenceNr:               Long,
     highestDeletedSequenceNumber: Long,
     readConsistency:              Option[ConsistencyLevel],
-    retryPolicy:                  Option[RetryPolicy]
-  ): Future[Long] = {
+    retryPolicy:                  Option[RetryPolicy]): Future[Long] = {
     queries
       .eventsByPersistenceId(
         persistenceId,
@@ -503,8 +499,7 @@ class CassandraJournal(cfg: Config) extends AsyncWriteJournal
         "asyncReadLowestSequenceNr",
         readConsistency,
         retryPolicy,
-        extractor = Extractors.sequenceNumber(eventDeserializer, serialization)
-      )
+        extractor = Extractors.sequenceNumber(eventDeserializer, serialization))
       .map(_.sequenceNr)
       .runWith(Sink.headOption)
       .map {
@@ -560,10 +555,10 @@ class CassandraJournal(cfg: Config) extends AsyncWriteJournal
  * INTERNAL API
  */
 @InternalApi private[akka] object CassandraJournal {
-  private[akka]type Tag = String
-  private[akka]type PersistenceId = String
-  private[akka]type SequenceNr = Long
-  private[akka]type TagPidSequenceNr = Long
+  private[akka] type Tag = String
+  private[akka] type PersistenceId = String
+  private[akka] type SequenceNr = Long
+  private[akka] type TagPidSequenceNr = Long
 
   private case object Init
 
@@ -627,8 +622,7 @@ class CassandraJournal(cfg: Config) extends AsyncWriteJournal
               val meta = serialization.deserialize(
                 Bytes.getArray(metaBytes),
                 metaSerId,
-                metaSerManifest
-              ) match {
+                metaSerManifest) match {
                   case Success(m) => m
                   case Failure(_) =>
                     // don't fail replay/query because of deserialization problem with meta data
