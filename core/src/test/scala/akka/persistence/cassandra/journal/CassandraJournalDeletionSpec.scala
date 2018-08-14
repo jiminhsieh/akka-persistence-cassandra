@@ -26,8 +26,7 @@ object CassandraJournalDeletionSpec {
     val persistenceId:            String,
     deleteSuccessProbe:           ActorRef,
     deleteFailProbe:              ActorRef,
-    override val journalPluginId: String   = "cassandra-journal"
-  )
+    override val journalPluginId: String   = "cassandra-journal")
     extends PersistentActor {
 
     var recoveredEvents: List[Any] = List.empty
@@ -68,8 +67,7 @@ class CassandraJournalDeletionSpec extends CassandraSpec(
     cassandra-journal-low-concurrent-deletes {
       max-concurrent-deletes = 5
     }
-  """
-) {
+  """) {
 
   import CassandraJournalDeletionSpec._
 
@@ -105,8 +103,7 @@ class CassandraJournalDeletionSpec extends CassandraSpec(
       val deleteSuccess = TestProbe()
       val deleteFail = TestProbe()
       val p1 = system.actorOf(Props(
-        new PAThatDeletes("p2", deleteSuccess.ref, deleteFail.ref, "cassandra-journal-low-concurrent-deletes")
-      ))
+        new PAThatDeletes("p2", deleteSuccess.ref, deleteFail.ref, "cassandra-journal-low-concurrent-deletes")))
 
       (1 to 100).foreach { i =>
         p1 ! PersistMe(i)

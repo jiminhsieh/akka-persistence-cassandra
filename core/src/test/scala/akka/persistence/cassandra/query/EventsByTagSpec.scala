@@ -60,8 +60,7 @@ object EventsByTagSpec {
       max-buffer-size = 50
       first-time-bucket = "${today.minusDays(5).format(firstBucketFormat)}"
     }
-    """
-  ).withFallback(CassandraLifecycle.config)
+    """).withFallback(CassandraLifecycle.config)
 
   val strictConfig = ConfigFactory.parseString(
     s"""
@@ -74,14 +73,12 @@ object EventsByTagSpec {
       }
 
     }
-    """
-  ).withFallback(config)
+    """).withFallback(config)
 
   val strictConfigFirstOffset1001DaysAgo = ConfigFactory.parseString(
     s"""
     cassandra-query-journal.first-time-bucket = "${today.minusDays(1001).format(firstBucketFormat)}"
-    """
-  ).withFallback(strictConfig)
+    """).withFallback(strictConfig)
 
   val disabledConfig = ConfigFactory.parseString(
     """
@@ -90,8 +87,7 @@ object EventsByTagSpec {
         keyspace=EventsByTagDisabled
         events-by-tag.enabled = false
       }
-    """
-  ).withFallback(config)
+    """).withFallback(config)
 }
 
 class EventWithMetaDataTagger extends WriteEventAdapter {

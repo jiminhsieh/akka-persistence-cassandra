@@ -33,8 +33,7 @@ import scala.concurrent.duration._
   val fetchMoreThreshold: Double = config.getDouble("fetch-more-threshold")
   require(
     0.0 <= fetchMoreThreshold && fetchMoreThreshold <= 1.0,
-    s"fetch-more-threshold must be between 0.0 and 1.0, was $fetchMoreThreshold"
-  )
+    s"fetch-more-threshold must be between 0.0 and 1.0, was $fetchMoreThreshold")
   val readConsistency: ConsistencyLevel = ConsistencyLevel.valueOf(config.getString("read-consistency"))
   val readRetries: Int = config.getInt("read-retries")
 
@@ -49,8 +48,7 @@ import scala.concurrent.duration._
     val date: LocalDateTime = LocalDateTime.parse(firstBucketPadded, timeBucketFormatter)
     TimeBucket(
       date.toInstant(ZoneOffset.UTC).toEpochMilli,
-      writePluginConfig.bucketSize
-    )
+      writePluginConfig.bucketSize)
   }
 
   val deserializationParallelism: Int = config.getInt("deserialization-parallelism")

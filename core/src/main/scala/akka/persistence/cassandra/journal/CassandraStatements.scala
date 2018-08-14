@@ -324,7 +324,6 @@ trait CassandraStatements {
 
     CassandraSession.serializedExecution(
       recur = () => executeCreateKeyspaceAndTables(session, config),
-      exec = () => create()
-    )
+      exec = () => create())
   }
 }

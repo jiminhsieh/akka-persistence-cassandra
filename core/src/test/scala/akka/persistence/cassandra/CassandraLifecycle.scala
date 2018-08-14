@@ -39,8 +39,7 @@ object CassandraLifecycle {
     cassandra-journal.circuit-breaker.call-timeout = 30s
     akka.test.single-expect-default = 20s
     akka.actor.serialize-messages=on
-    """
-    )
+    """)
 
     // this isn't used if extending CassandraSpec
     val port = mode match {
@@ -54,8 +53,7 @@ object CassandraLifecycle {
       s"""
       cassandra-journal.port = $port
       cassandra-snapshot-store.port = $port
-    """
-    ))
+    """))
   }
 
   def awaitPersistenceInit(system: ActorSystem, journalPluginId: String = "", snapshotPluginId: String = ""): Unit = {
@@ -74,8 +72,7 @@ object CassandraLifecycle {
 
   class AwaitPersistenceInit(
     override val journalPluginId:  String,
-    override val snapshotPluginId: String
-  ) extends PersistentActor {
+    override val snapshotPluginId: String) extends PersistentActor {
     def persistenceId: String = "persistenceInit"
 
     def receiveRecover: Receive = {
@@ -130,8 +127,7 @@ trait CassandraLifecycle extends BeforeAndAfterAll with TestKitBase {
           configResource = cassandraConfigResource,
           clean = true,
           port = port,
-          CassandraLauncher.classpathForResources("logback-test.xml")
-        )
+          CassandraLauncher.classpathForResources("logback-test.xml"))
       case External =>
     }
   }

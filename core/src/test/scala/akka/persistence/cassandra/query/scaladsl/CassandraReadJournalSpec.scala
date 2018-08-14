@@ -29,8 +29,7 @@ object CassandraReadJournalSpec {
       "java.lang.String" = test-tagger
     }
     cassandra-journal.log-queries = off
-    """
-  ).withFallback(CassandraLifecycle.config)
+    """).withFallback(CassandraLifecycle.config)
 }
 
 class TestTagger extends WriteEventAdapter {
