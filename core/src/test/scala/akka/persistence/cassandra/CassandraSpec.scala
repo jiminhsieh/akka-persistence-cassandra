@@ -112,6 +112,7 @@ abstract class CassandraSpec(config: Config, val journalName: String = getCaller
 
   final override lazy val cluster = Cluster.builder()
     .addContactPoint("localhost")
+    .withClusterName(this.getClass.getSimpleName)
     .withPort(port())
     .build()
 
