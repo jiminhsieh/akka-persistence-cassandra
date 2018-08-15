@@ -52,6 +52,8 @@ def common: Seq[Setting[_]] = Seq(
   testOptions in Test += Tests.Argument("-oDF"),
 
   // don't save test output to a file
+  testListeners in (Test, test) := Nil,
+    //Seq(TestLogger(streams.value.log, {_ => streams.value.log }, logBuffered.value))
   //testListeners in (Test, test) := Seq(TestLogger(streams.value.log, {_ => streams.value.log }, logBuffered.value)),
 
   // -v Log "test run started" / "test started" / "test run finished" events on log level "info" instead of "debug".
